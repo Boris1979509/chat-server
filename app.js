@@ -100,6 +100,7 @@ io.on('connection', (socket) => {
         chats.forEach((chat) => {
             io.in(chat).emit(SocketEmitters.USER_OFFLINE, { userId, username })
         })
+        io.sockets.emit(SocketEmitters.USER_DISCONNECT)
         socket.disconnect() // DISCONNECT SOCKET
         console.log('disconnect: ' + username)
     })
@@ -140,7 +141,6 @@ io.on('connection', (socket) => {
                     chatId,
                     username,
                 })
-                io.sockets.emit(SocketEmitters.USER_DISCONNECT)
                 /** For current socket */
                 socket.emit(SocketEmitters.USER_REFRESH_AFTER_LEAVE_CHAT)
             } catch (error) {
