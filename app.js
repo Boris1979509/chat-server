@@ -13,8 +13,7 @@ const http = require('http')
 const server = http.createServer(app)
 const users = require('./users')()
 
-//const PORT = process.env.SERVER_PORT || 3000
-const PORT = 6000
+const PORT = process.env.PORT || process.env.SERVER_PORT || 3000
 
 const io = require('socket.io')(server)
 
