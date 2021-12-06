@@ -3,20 +3,19 @@ const express = require('express')
 require('dotenv').config()
 const cors = require('cors')
 const app = express()
-app.use(cors()) /** *CORS */
-app.options('*', cors())
+const corsOpts = {
+    origin: '*',
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type'],
+}
+app.use(cors(corsOpts))
 const http = require('http')
 const server = http.createServer(app)
 const users = require('./users')()
 
 const PORT = process.env.SERVER_PORT || 3000
 
-const io = require('socket.io')(server, {
-    cors: {
-        origin: 'http://192.168.0.8:8080',
-        methods: ['GET', 'POST'],
-    },
-})
+const io = require('socket.io')(server)
 
 const mongoose = require('mongoose')
 const { url } = require('./config/db')
