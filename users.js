@@ -11,7 +11,6 @@ class Users {
      * @param {Object} user
      */
     add(user) {
-        if (!user.chats.length) return
         const id = user.id
         const idx = this.users.findIndex((user) => user.id === id)
         if (idx !== -1) {
