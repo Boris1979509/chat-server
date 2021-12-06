@@ -3,6 +3,7 @@ const express = require('express')
 require('dotenv').config()
 const cors = require('cors')
 const app = express()
+app.use(cors()) /** *CORS */
 const http = require('http')
 const server = http.createServer(app)
 const users = require('./users')()
@@ -27,8 +28,6 @@ const SocketEmitters = require('./socket/emitters')
 const chatService = require('./services/chat')
 const messageService = require('./services/message')
 const userService = require('./services/user')
-
-app.use(cors()) /** *CORS */
 
 /** Routes API */
 const ROUTES = {
