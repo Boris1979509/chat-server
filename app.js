@@ -99,6 +99,7 @@ io.on('connection', (socket) => {
         chats.forEach((chat) => {
             io.in(chat).emit(SocketEmitters.USER_OFFLINE, { userId, username })
         })
+        io.sokets.emit(SocketEmitters.USER_DISCONNECT)
         socket.disconnect() // DISCONNECT SOCKET
         console.log('disconnect: ' + username)
     })

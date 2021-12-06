@@ -11,4 +11,5 @@ module.exports = {
     USER_REFRESH_AFTER_LEAVE_CHAT: 'user-refresh-after-leave-chat',
     USER_REFRESH_AFTER_JOIN: 'user-refresh-after-join',
     CLIENTS_COUNT_ONLINE_IN_ROOM: 'clients-count-online-in-room',
+    USER_DISCONNECT: 'user-disconnect',
 }
