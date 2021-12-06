@@ -87,6 +87,7 @@ io.on('connection', (socket) => {
                         username,
                     })
                 })
+                io.sockets.emit(SocketEmitters.USER_CONNECT)
             }
             console.log('connect: ' + username)
         }
