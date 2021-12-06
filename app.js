@@ -3,19 +3,18 @@ const express = require('express')
 require('dotenv').config()
 const cors = require('cors')
 const app = express()
-const corsOpts = {
-    origin: '*',
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type'],
-}
-app.use(cors(corsOpts))
 const http = require('http')
 const server = http.createServer(app)
 const users = require('./users')()
 
 const PORT = process.env.PORT || process.env.SERVER_PORT || 3000
 
-const io = require('socket.io')(server)
+const io = require('socket.io')(server, {
+    cors: {
+        origin: 'http://192.168.0.8:8080' /**'http://localhost:8080'*/,
+        methods: ['GET', 'POST'],
+    },
+})
 
 const mongoose = require('mongoose')
 const { url } = require('./config/db')
@@ -28,6 +27,8 @@ const SocketEmitters = require('./socket/emitters')
 const chatService = require('./services/chat')
 const messageService = require('./services/message')
 const userService = require('./services/user')
+
+app.use(cors()) /** *CORS */
 
 /** Routes API */
 const ROUTES = {
