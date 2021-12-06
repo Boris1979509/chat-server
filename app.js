@@ -13,8 +13,6 @@ const http = require('http')
 const server = http.createServer(app)
 const users = require('./users')()
 
-const PORT = process.env.SERVER_PORT || 3000
-
 const io = require('socket.io')(server)
 
 const mongoose = require('mongoose')
@@ -175,8 +173,8 @@ io.on('connection', (socket) => {
         })
     })
 })
-console.log(users.getUsers())
-server.listen(PORT, async () => {
+
+server.listen(3000, async () => {
     //const url = await ngrok.connect(PORT)
     console.log('listening on : ' + PORT)
 })
