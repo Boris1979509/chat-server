@@ -9,14 +9,12 @@ const users = require('./users')()
 
 const PORT = process.env.SERVER_PORT || 3000
 
-const io = require('socket.io')(
-    server /** , {
+const io = require('socket.io')(server, {
     cors: {
         origin: 'http://192.168.0.8:8080',
         methods: ['GET', 'POST'],
     },
-    } */
-)
+})
 
 const mongoose = require('mongoose')
 const { url } = require('./config/db')
