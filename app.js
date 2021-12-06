@@ -114,6 +114,7 @@ io.on('connection', (socket) => {
                 io.in(chatId).emit(SocketEmitters.NEW_USER_JOIN, {
                     userId,
                     username,
+                    chatId,
                 })
             } catch (error) {
                 console.log(error)
