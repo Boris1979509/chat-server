@@ -141,6 +141,7 @@ io.on('connection', (socket) => {
                     chatId,
                     username,
                 })
+                io.sockets.emit(SocketEmitters.USER_DISCONNECT)
                 /** For current socket */
                 socket.emit(SocketEmitters.USER_REFRESH_AFTER_LEAVE_CHAT)
             } catch (error) {
