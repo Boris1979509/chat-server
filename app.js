@@ -4,6 +4,7 @@ require('dotenv').config()
 const cors = require('cors')
 const app = express()
 app.use(cors()) /** *CORS */
+app.options('*', cors())
 const http = require('http')
 const server = http.createServer(app)
 const users = require('./users')()
