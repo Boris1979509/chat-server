@@ -134,7 +134,10 @@ io.on('connection', (socket) => {
                 users.add(u(userId, username, socket.id, chats))
 
                 /** For chat room */
-                io.in(chatId).emit(SocketEmitters.USER_LEAVE_CHAT, username)
+                io.in(chatId).emit(SocketEmitters.USER_LEAVE_CHAT, {
+                    chatId,
+                    username,
+                })
                 /** For current socket */
                 socket.emit(SocketEmitters.USER_REFRESH_AFTER_LEAVE_CHAT)
             } catch (error) {
