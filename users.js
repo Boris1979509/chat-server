@@ -17,6 +17,7 @@ class Users {
         if (idx !== -1) {
             this.users.splice(idx, 1)
         }
+        if (!user.chats.length) return
         this.users.push(user)
     }
 
