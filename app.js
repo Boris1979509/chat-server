@@ -75,7 +75,7 @@ mongoose
 
 io.on('connection', (socket) => {
     const u = (id, name, socket, chats) => ({ id, name, socket, chats })
-
+    console.log(socket.id)
     socket.emit(SocketEmitters.SET_USER_ONLINE)
 
     /** User online */
