@@ -96,7 +96,8 @@ io.on('connection', (socket) => {
     /** Select chats list*/
     socket.on(SocketListeners.FETCH_COUNT_SOCKETS_IN_ROOM, async (chatId) => {
         const sockets = await io.in(chatId).fetchSockets()
-        socket.emit(SocketEmitters.FETCH_COUNT_SOCKETS_IN_ROOM, sockets.length)
+        console.log(sockets)
+        socket.emit(SocketEmitters.FETCH_COUNT_SOCKETS_IN_ROOM, sockets)
     })
 
     /** User offline */
