@@ -94,7 +94,7 @@ io.on('connection', (socket) => {
         }
     )
     /** Select chats list*/
-    socket.on(SocketListeners.FETCH_COUNT_SOCKETS_IN_ROOM, async (chatId) => {
+    socket.on(SocketListeners.FETCH_COUNT_SOCKETS_IN_ROOM, (chatId) => {
         //const sockets = await io.in(chatId).fetchSockets()
         console.log(chatId)
         socket.emit(SocketEmitters.FETCH_COUNT_SOCKETS_IN_ROOM, chatId)
