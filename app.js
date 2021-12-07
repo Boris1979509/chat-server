@@ -78,21 +78,18 @@ io.on('connection', (socket) => {
 
     //socket.emit(SocketEmitters.SET_USER_ONLINE)
 
-    /** User online */
+    /** SET USER WITH CHATS */
     socket.on(
         SocketListeners.SET_USER_ONLINE,
-        ({ _id: userId, username, chats = [] }) => {
-            if (chats.length) {
-                users.add(u(userId, username, socket.id, chats))
-                chats.forEach((chat) => {
-                    socket.join(chat)
-                    io.to(chat).emit(SocketEmitters.USER_ONLINE, {
-                        userId,
-                        username,
-                    })
+        ({ _id: userId, username, chats }) => {
+            users.add(u(userId, username, socket.id, chats))
+            chats.forEach((chat) => {
+                socket.join(chat)
+                io.to(chat).emit(SocketEmitters.USER_ONLINE, {
+                    userId,
+                    username,
                 })
-                //io.sockets.emit(SocketEmitters.USER_CONNECT)
-            }
+            })
             console.log('connect: ' + username)
         }
     )
@@ -104,7 +101,7 @@ io.on('connection', (socket) => {
         chats.forEach((chat) => {
             io.in(chat).emit(SocketEmitters.USER_OFFLINE, { userId, username })
         })
-        io.sockets.emit(SocketEmitters.USER_DISCONNECT)
+        //io.sockets.emit(SocketEmitters.USER_DISCONNECT)
         socket.disconnect() // DISCONNECT SOCKET
         console.log('disconnect: ' + username)
     })
@@ -145,7 +142,7 @@ io.on('connection', (socket) => {
                     chatId,
                     username,
                 })
-                io.sockets.emit(SocketEmitters.USER_DISCONNECT)
+                //io.sockets.emit(SocketEmitters.USER_DISCONNECT)
                 /** For current socket */
                 socket.emit(SocketEmitters.USER_REFRESH_AFTER_LEAVE_CHAT)
             } catch (error) {
