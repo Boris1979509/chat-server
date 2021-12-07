@@ -153,10 +153,7 @@ io.on('connection', (socket) => {
             }
         }
     )
-    // Select chat
-    socket.on(SocketListeners.SELECT_CHAT, async (chatId) => {
-        //socket.join(chatId)
-    })
+
     // User typing
     socket.on(SocketListeners.USER_TYPING, ({ chatId, userId }) => {
         io.in(chatId).emit(SocketEmitters.USER_TYPING, { chatId, userId })
