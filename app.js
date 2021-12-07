@@ -93,6 +93,11 @@ io.on('connection', (socket) => {
             console.log('connect: ' + username)
         }
     )
+    /** */
+    socket.on(SocketListeners.FETCH_COUNT_SOCKETS_IN_ROOM, async (chatId) => {
+        const sockets = await io.in(chatId).fetchSockets()
+        socket.emit(SocketEmitters.FETCH_COUNT_SOCKETS_IN_ROOM, sockets)
+    })
 
     /** User offline */
     socket.on('disconnect', () => {

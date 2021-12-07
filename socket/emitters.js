@@ -14,4 +14,5 @@ module.exports = {
     USER_DISCONNECT: 'user-disconnect',
     USER_CONNECT: 'user-connect',
     SET_USER_ONLINE: 'set-user-online',
+    FETCH_COUNT_SOCKETS_IN_ROOM: 'fetch-count-sockets-in-room',
 }
