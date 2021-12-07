@@ -75,8 +75,8 @@ mongoose
 
 io.on('connection', (socket) => {
     const u = (id, name, socket, chats) => ({ id, name, socket, chats })
-    console.log(socket.id)
-    socket.emit(SocketEmitters.SET_USER_ONLINE)
+
+    //socket.emit(SocketEmitters.SET_USER_ONLINE)
 
     /** User online */
     socket.on(
@@ -85,12 +85,13 @@ io.on('connection', (socket) => {
             if (chats.length) {
                 users.add(u(userId, username, socket.id, chats))
                 chats.forEach((chat) => {
-                    io.in(chat).emit(SocketEmitters.USER_ONLINE, {
+                    socket.join(chat)
+                    io.to(chat).emit(SocketEmitters.USER_ONLINE, {
                         userId,
                         username,
                     })
                 })
-                io.sockets.emit(SocketEmitters.USER_CONNECT)
+                //io.sockets.emit(SocketEmitters.USER_CONNECT)
             }
             console.log('connect: ' + username)
         }
