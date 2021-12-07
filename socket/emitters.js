@@ -13,4 +13,5 @@ module.exports = {
     CLIENTS_COUNT_ONLINE_IN_ROOM: 'clients-count-online-in-room',
     USER_DISCONNECT: 'user-disconnect',
     USER_CONNECT: 'user-connect',
+    SET_USER_ONLINE: 'set-user-online',
 }
