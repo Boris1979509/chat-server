@@ -81,7 +81,7 @@ io.on('connection', (socket) => {
     /** User online */
     socket.on(
         SocketListeners.SET_USER_ONLINE,
-        ({ _id: userId, username, chats }) => {
+        ({ _id: userId, username, chats = [] }) => {
             if (chats.length) {
                 users.add(u(userId, username, socket.id, chats))
                 chats.forEach((chat) => {
