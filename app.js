@@ -94,13 +94,22 @@ io.on('connection', (socket) => {
         }
     )
     /** Select chats list*/
-    socket.on(SocketListeners.FETCH_COUNT_SOCKETS_IN_ROOM, async (chatId) => {
-        const sockets = await io
-            .in(chatId)
-            .fetchSockets() /** Count sockets in room */
-        console.log(sockets.length)
-        socket.emit(SocketEmitters.FETCH_COUNT_SOCKETS_IN_ROOM, sockets.length)
-    })
+    socket.on(
+        SocketListeners.FETCH_COUNT_SOCKETS_IN_ROOM,
+        async ({ chatId, state }) => {
+            /** Count sockets in room */
+            const sockets = await io.in(chatId).fetchSockets()
+            const data = {
+                chatId,
+                count: sockets.length,
+            }
+            /**
+             *  If (state === true) { emit all sockets } else { emit current socket }
+             */
+            if (state) io.emit(SocketEmitters.FETCH_COUNT_SOCKETS_IN_ROOM, data)
+            else socket.emit(SocketEmitters.FETCH_COUNT_SOCKETS_IN_ROOM, data)
+        }
+    )
 
     /** User offline */
     socket.on('disconnect', () => {
@@ -109,7 +118,7 @@ io.on('connection', (socket) => {
         chats.forEach((chat) => {
             io.in(chat).emit(SocketEmitters.USER_OFFLINE, { userId, username })
         })
-        //io.sockets.emit(SocketEmitters.USER_DISCONNECT)
+
         socket.disconnect() // DISCONNECT SOCKET
         console.log('disconnect: ' + username)
     })
@@ -126,6 +135,12 @@ io.on('connection', (socket) => {
                     userId,
                     username,
                     chatId,
+                })
+                /** Count sockets in room, send all sockets */
+                const sockets = await io.in(chatId).fetchSockets()
+                io.emit(SocketEmitters.FETCH_COUNT_SOCKETS_IN_ROOM, {
+                    chatId,
+                    count: sockets.length,
                 })
             } catch (error) {
                 console.log(error)
@@ -150,7 +165,12 @@ io.on('connection', (socket) => {
                     chatId,
                     username,
                 })
-                //io.sockets.emit(SocketEmitters.USER_DISCONNECT)
+                /** Count sockets in room, send all sockets */
+                const sockets = await io.in(chatId).fetchSockets()
+                io.emit(SocketEmitters.FETCH_COUNT_SOCKETS_IN_ROOM, {
+                    chatId,
+                    count: sockets.length,
+                })
                 /** For current socket */
                 socket.emit(SocketEmitters.USER_REFRESH_AFTER_LEAVE_CHAT)
             } catch (error) {
