@@ -1,5 +1,4 @@
 const express = require('express')
-//const ngrok = require('ngrok')
 require('dotenv').config()
 const cors = require('cors')
 const app = express()
@@ -93,15 +92,17 @@ io.on('connection', (socket) => {
             console.log('connect: ' + username)
         }
     )
-    /** Select chats list*/
+    /** FETCH SOCKETS COUNT */
     socket.on(
         SocketListeners.FETCH_COUNT_SOCKETS_IN_ROOM,
         async ({ chatId, state }) => {
+            const ids = users.getByRoomIds(chatId)
             /** Count sockets in room */
             const sockets = await io.in(chatId).fetchSockets()
             const data = {
                 chatId,
                 count: sockets.length,
+                ids,
             }
             /**
              *  If (state === true) { emit all sockets } else { emit current socket }
@@ -197,20 +198,8 @@ io.on('connection', (socket) => {
             console.log(error)
         }
     })
-    /** Select in chat list component */
-    socket.on(SocketListeners.CLIENTS_COUNT_ONLINE_IN_ROOM, (chatId) => {
-        const count = users.getCount(chatId)
-        const ids = users.getByRoomIds(chatId)
-        console.log(ids, count)
-        io.sockets.emit(SocketEmitters.CLIENTS_COUNT_ONLINE_IN_ROOM, {
-            chatId,
-            count,
-            ids,
-        })
-    })
 })
 
 server.listen(PORT, async () => {
-    //const url = await ngrok.connect(PORT)
     console.log('listening on : ' + PORT)
 })
