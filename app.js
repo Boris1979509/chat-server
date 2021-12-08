@@ -185,8 +185,12 @@ io.on('connection', (socket) => {
     )
 
     // User typing
-    socket.on(SocketListeners.USER_TYPING, ({ chatId, userId }) => {
-        io.in(chatId).emit(SocketEmitters.USER_TYPING, { chatId, userId })
+    socket.on(SocketListeners.USER_TYPING, ({ chatId, userId, username }) => {
+        io.in(chatId).emit(SocketEmitters.USER_TYPING, {
+            chatId,
+            userId,
+            username,
+        })
     })
     // New message
     socket.on(SocketListeners.NEW_MESSAGE, async ({ chatId, userId, text }) => {
