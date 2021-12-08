@@ -137,11 +137,13 @@ io.on('connection', (socket) => {
                     username,
                     chatId,
                 })
+                const ids = users.getByRoomIds(chatId)
                 /** Count sockets in room, send all sockets */
                 const sockets = await io.in(chatId).fetchSockets()
                 io.emit(SocketEmitters.FETCH_COUNT_SOCKETS_IN_ROOM, {
                     chatId,
                     count: sockets.length,
+                    ids,
                 })
             } catch (error) {
                 console.log(error)
@@ -166,11 +168,13 @@ io.on('connection', (socket) => {
                     chatId,
                     username,
                 })
+                const ids = users.getByRoomIds(chatId)
                 /** Count sockets in room, send all sockets */
                 const sockets = await io.in(chatId).fetchSockets()
                 io.emit(SocketEmitters.FETCH_COUNT_SOCKETS_IN_ROOM, {
                     chatId,
                     count: sockets.length,
+                    ids,
                 })
                 /** For current socket */
                 socket.emit(SocketEmitters.USER_REFRESH_AFTER_LEAVE_CHAT)
