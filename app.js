@@ -10,7 +10,10 @@ const PORT = process.env.PORT || process.env.SERVER_PORT || 3000
 
 const io = require('socket.io')(server, {
     cors: {
-        origin: 'https://boris1979509.github.io/chat-client' /**'http://192.168.0.6:8080'*/,
+        origin: [
+            'https://boris1979509.github.io/chat-client',
+            'http://192.168.0.6:8080',
+        ],
         methods: ['GET', 'POST'],
     },
 })
