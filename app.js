@@ -101,7 +101,8 @@ io.on('connection', (socket) => {
             const sockets = await io.in(chatId).fetchSockets()
             const data = {
                 chatId,
-                count: sockets.length,
+                // count: sockets.length,
+                count: ids.length,
                 ids,
             }
             /**
@@ -142,7 +143,8 @@ io.on('connection', (socket) => {
                 const sockets = await io.in(chatId).fetchSockets()
                 io.emit(SocketEmitters.FETCH_COUNT_SOCKETS_IN_ROOM, {
                     chatId,
-                    count: sockets.length,
+                    // count: sockets.length,
+                    count: ids.length,
                     ids,
                 })
             } catch (error) {
@@ -173,7 +175,8 @@ io.on('connection', (socket) => {
                 const sockets = await io.in(chatId).fetchSockets()
                 io.emit(SocketEmitters.FETCH_COUNT_SOCKETS_IN_ROOM, {
                     chatId,
-                    count: sockets.length,
+                    // count: sockets.length,
+                    count: ids.length,
                     ids,
                 })
                 /** For current socket */
