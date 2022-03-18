@@ -3,10 +3,6 @@
     "version": "1.0.0",
     "description": "",
     "main": "app.js",
-    "engines": {
-        "node": "16.x",
-        "npm": "8.x"
-    },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "nodemon app.js",
@@ -24,10 +20,5 @@
         "module-alias": "^2.2.2",
         "mongoose": "^6.0.12",
         "socket.io": "^4.3.1"
-    },
-    "devDependencies": {
-        "eslint": "^8.2.0",
-        "eslint-config-airbnb": "^18.2.1",
-        "eslint-config-prettier": "^8.3.0"
     }
 }
