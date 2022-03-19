@@ -40,6 +40,7 @@ const ROUTES = {
 const userRoute = require('./routes/user')
 const chatRoute = require('./routes/chat')
 const messageRoute = require('./routes/message')
+const { disconnect } = require('process')
 
 app.use(express.json())
 app.use(ROUTES.users, userRoute)
@@ -74,7 +75,19 @@ mongoose
 
 io.on('connection', (socket) => {
     const u = (id, name, socket, chats) => ({ id, name, socket, chats })
-
+    const disconnect = (socketId) => {
+        if (!users.get(socketId)) return
+        const { id: userId, name: username, chats } = users.remove(socketId)
+        if (chats.length) {
+            chats.forEach((chat) => {
+                io.in(chat).emit(SocketEmitters.USER_OFFLINE, {
+                    userId,
+                    username,
+                })
+            })
+        }
+        console.log('disconnect: ' + username)
+    }
     //socket.emit(SocketEmitters.SET_USER_ONLINE)
 
     /** SET USER WITH CHATS */
@@ -112,17 +125,10 @@ io.on('connection', (socket) => {
             else socket.emit(SocketEmitters.FETCH_COUNT_SOCKETS_IN_ROOM, data)
         }
     )
-
     /** User offline */
     socket.on('disconnect', () => {
-        if (!users.get(socket.id)) return
-        const { id: userId, name: username, chats } = users.remove(socket.id)
-        chats.forEach((chat) => {
-            io.in(chat).emit(SocketEmitters.USER_OFFLINE, { userId, username })
-        })
-
+        disconnect(socket.id)
         socket.disconnect() // DISCONNECT SOCKET
-        console.log('disconnect: ' + username)
     })
     /** Join chat */
     socket.on(
@@ -210,8 +216,8 @@ io.on('connection', (socket) => {
         }
     })
     // Logout
-    socket.on(SocketListeners.LOGOUT, ({ chatId, userId }) => {
-        console.log(chatId, userId)
+    socket.on(SocketListeners.LOGOUT, (userId) => {
+        disconnect(socket.id)
     })
 })
 
