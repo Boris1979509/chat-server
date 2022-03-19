@@ -9,4 +9,5 @@ module.exports = {
     CLIENTS_COUNT_ONLINE_IN_ROOM: 'clients-count-online-in-room',
     ALL_USERS_ONLINE: 'all-users-online',
     FETCH_COUNT_SOCKETS_IN_ROOM: 'fetch-count-sockets-in-room',
+    LOGOUT: 'logout',
 }

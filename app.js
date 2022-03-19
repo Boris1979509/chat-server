@@ -209,6 +209,10 @@ io.on('connection', (socket) => {
             console.log(error)
         }
     })
+    // Logout
+    socket.on(SocketListeners.LOGOUT, ({ chatId, userId }) => {
+        console.log(chatId, userId)
+    })
 })
 
 server.listen(PORT, async () => {
