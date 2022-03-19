@@ -76,7 +76,6 @@ mongoose
 io.on('connection', (socket) => {
     const u = (id, name, socket, chats) => ({ id, name, socket, chats })
     const disconnectSocket = (socketId) => {
-        console.log(socketId)
         if (!users.get(socketId)) return
         const { id: userId, name: username, chats } = users.remove(socketId)
         if (chats.length) {
