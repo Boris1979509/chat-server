@@ -86,8 +86,8 @@ io.on('connection', (socket) => {
                 })
             })
         }
-        socket.disconnect() // DISCONNECT SOCKET
         console.log('disconnect: ' + username)
+        socket.disconnect() // DISCONNECT SOCKET
     }
     //socket.emit(SocketEmitters.SET_USER_ONLINE)
 
