@@ -75,9 +75,9 @@ mongoose
 
 io.on('connection', (socket) => {
     const u = (id, name, socket, chats) => ({ id, name, socket, chats })
-    const disconnectSocket = (socketId) => {
-        if (!users.get(socketId)) return
-        const { id: userId, name: username, chats } = users.remove(socketId)
+    const disconnectSocket = (socket) => {
+        if (!users.get(socket.id)) return
+        const { id: userId, name: username, chats } = users.remove(socket.id)
         if (chats.length) {
             chats.forEach((chat) => {
                 io.in(chat).emit(SocketEmitters.USER_OFFLINE, {
@@ -86,6 +86,7 @@ io.on('connection', (socket) => {
                 })
             })
         }
+        socket.disconnect() // DISCONNECT SOCKET
         console.log('disconnect: ' + username)
     }
     //socket.emit(SocketEmitters.SET_USER_ONLINE)
@@ -127,8 +128,7 @@ io.on('connection', (socket) => {
     )
     /** User offline */
     socket.on('disconnect', () => {
-        disconnectSocket(socket.id)
-        socket.disconnect() // DISCONNECT SOCKET
+        disconnectSocket(socket)
     })
     /** Join chat */
     socket.on(
