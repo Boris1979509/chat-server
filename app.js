@@ -217,7 +217,7 @@ io.on('connection', (socket) => {
     })
     // Logout
     socket.on(SocketListeners.LOGOUT, (userId) => {
-        disconnectSocket(socket.id)
+        disconnectSocket(socket)
     })
 })
 
